@@ -23,6 +23,8 @@ public class Soldado {
     public int getVida() {
         return vida;
     }
-    public void mostrarTablero(){
+    @Override
+    public String toString() {
+        return "Información:\nNombre: " + nombre + "\nVida: " + vida + "\nFila: " + fila + "\nColumna: " + columna;
     }
 }
