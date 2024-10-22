@@ -4,7 +4,7 @@ public class Soldado {
     private int fila;
     private int columna;
     private String equipo;
-    public Soldado(String nombre, int vida, int fila, int columna, String equipo){
+    public Soldado(String nombre, int vida, int fila, int columna, String equipo){ // CONSTRUCTOR PARA EVITAR MUCHOS MÉTODOS
         this.nombre = nombre;
         this.vida = vida;
         this.fila = fila;
@@ -17,7 +17,9 @@ public class Soldado {
     public int getVida() {
         return vida;
     }
-    @Override
+    public String getEquipo() {
+        return equipo;
+    }
     public String toString() {
         return "Información:\nNombre: " + nombre + "\nVida: " + vida + "\nFila: " + fila + "\nColumna: " + columna;
     }
