@@ -29,10 +29,10 @@
 <tr><th colspan="6">INFORMACIÓN BÁSICA</th></tr>
 </theader>
 <tbody>
-<tr><td>ASIGNATURA:</td><td colspan="5">Programación Web 2</td></tr>
+<tr><td>ASIGNATURA:</td><td colspan="5">Fundamentos de la programación 2</td></tr>
 <tr><td>TÍTULO DE LA PRÁCTICA:</td><td colspan="5">Vim - Git - GitHub</td></tr>
 <tr>
-<td>NÚMERO DE PRÁCTICA:</td><td>01</td><td>AÑO LECTIVO:</td><td>2023 A</td><td>NRO. SEMESTRE:</td><td>III</td>
+<td>NÚMERO DE PRÁCTICA:</td><td>01</td><td>AÑO LECTIVO:</td><td>2023 A</td><td>NRO. SEMESTRE: II</td><td>III</td>
 </tr>
 <tr>
 <td>FECHA INICIO::</td><td>01-May-2023</td><td>FECHA FIN:</td><td>07-May-2023</td><td>DURACIÓN:</td><td>04 horas</td>
