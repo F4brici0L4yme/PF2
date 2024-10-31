@@ -47,7 +47,7 @@
 </<tr>
 <tr><td colspan="6">DOCENTES:
 <ul>
-<li>Richart Smith Escobedo Quispe - rescobedoq@unsa.edu.pe</li>
+<li>Lino Jose Pinto Oppe</li>
 </ul>
 </td>
 </<tr>
