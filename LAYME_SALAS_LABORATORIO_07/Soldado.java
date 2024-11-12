@@ -21,7 +21,7 @@ public class Soldado {
         return equipo;
     }
     public String toString() {
-        return "Información:\nNombre: " + nombre + "\nVida: " + vida + "\nFila: " + fila + "\nColumna: " + columna;
+        return "Nombre: " + nombre + " | Vida: " + vida + " | Fila: " + fila + " | Columna: " + columna;
     }
 }
 

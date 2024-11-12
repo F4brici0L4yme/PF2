@@ -43,7 +43,7 @@ public class VideoJuego7 {
             int fila = (int) (Math.random() * 10);
             int columna = (int) (Math.random() * 10);
             if (tablero.get(fila).get(columna) == null) { // SE VERIFICA QUE NO HAYA OTRO SOLDADO EN ESA POSICIÓN, SI LO HAY, BUSCA OTRA
-                tablero.get(fila).set(columna, new Soldado(color+fila+"X"+columna + "\u001B[0m", (int) (Math.random() * 5 + 1), fila, columna, equipo));  //USÉ COLORES PARA LA DISTINCIÓN ENTRE SOLDADOS
+                tablero.get(fila).set(columna, new Soldado(color+fila+"X"+columna + "\u001B[0m", (int) (Math.random() * 5 + 1), fila, columna, equipo));  //COLORES PARA LA DISTINCIÓN
                 cantidad--;
                 if(equipo.equals("azul")){
                     vidaTotalAzul += tablero.get(fila).get(columna).getVida();
