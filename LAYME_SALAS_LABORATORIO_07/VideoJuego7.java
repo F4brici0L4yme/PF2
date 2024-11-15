@@ -8,7 +8,29 @@ public class VideoJuego7 {
     public static Soldado[] soldadosUniDimensionalAzul = new Soldado[10]; // ARREGLO ESTÁNDAR UTILIZADO PARA ORDENAMIENTOS
     public static Soldado[] soldadosUniDimensionalRojo = new Soldado[10]; // ARREGLO ESTÁNDAR UTILIZADO PARA ORDENAMIENTOS
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        boolean seguir = true;
         ArrayList<ArrayList<Soldado>> tablero = new ArrayList<ArrayList<Soldado>>(); //INICIALIZO MI ARRAYLIST BIDIMENSIONAL
+        while(seguir){
+            System.out.println("¿Desea ejecutar el programa? (s/n)");
+            String rpta = scan.next();
+            if(rpta.equals("s")){
+                iniciarPrograma(tablero);
+                tablero.removeAll(tablero); // Limpia el tablero para un nuevo juego
+                vidaTotalAzul = 0;
+                vidaTotalRojo = 0;
+                mayorVidaAzul = new Soldado(null, 0, 0, 0, null);
+                mayorVidaRojo = new Soldado(null, 0, 0, 0, null);
+                soldadosUniDimensionalAzul = new Soldado[10];
+                soldadosUniDimensionalRojo = new Soldado[10];
+            }
+            else if(rpta.equals("n"))
+                seguir = false;
+            else
+                System.out.println("Esa no es una opción válida");
+        }
+    }
+    public static void iniciarPrograma(ArrayList<ArrayList<Soldado>> tablero){
         int cantidad = (int)(Math.random() * 10 + 1);
         int cantidadEnemiga = (int)(Math.random() * 10 + 1);
         for(int i = 0; i<10; i++){ //INICIALIZAR 10 FILAS
