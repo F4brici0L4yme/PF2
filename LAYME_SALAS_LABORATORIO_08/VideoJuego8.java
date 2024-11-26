@@ -1,141 +1,158 @@
-/*Propósito: simular un tablero 10x10 en el que de desarrolla una batalla con arreglos estándar y ArrayList*/
 import java.util.*;
+
 public class VideoJuego8 {
-    public static int vidaTotalAzul = 0; //PARA HALLAR EL PROMEDIO
+    public static int vidaTotalAzul = 0;
     public static int vidaTotalRojo = 0;
-    public static Soldado mayorVidaAzul = new Soldado(null, 0, 0, 0, null); // INICIALIZO UN SOLDADO PARA LA COMPARACIÓN
-    public static Soldado mayorVidaRojo = new Soldado(null, 0, 0, 0, null);
-    public static Soldado[] soldadosUniDimensionalAzul = new Soldado[10]; // ARREGLO ESTÁNDAR UTILIZADO PARA ORDENAMIENTOS
-    public static Soldado[] soldadosUniDimensionalRojo = new Soldado[10]; // ARREGLO ESTÁNDAR UTILIZADO PARA ORDENAMIENTOS
+    public static Soldado mayorVidaAzul = new Soldado(null, 0, null, null);
+    public static Soldado mayorVidaRojo = new Soldado(null, 0, null, null);
+    public static Soldado[] soldadosUniDimensionalAzul = new Soldado[10];
+    public static Soldado[] soldadosUniDimensionalRojo = new Soldado[10];
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean seguir = true;
-        ArrayList<ArrayList<Soldado>> tablero = new ArrayList<ArrayList<Soldado>>(); //INICIALIZO MI ARRAYLIST BIDIMENSIONAL
-        while(seguir){
+
+        HashMap<String, Soldado> tablero = new HashMap<>();
+        while (seguir) {
             System.out.println("¿Desea ejecutar el programa? (s/n)");
             String rpta = scan.next();
-            if(rpta.equals("s")){
+            if (rpta.equals("s")) {
                 iniciarPrograma(tablero);
-                tablero.removeAll(tablero); // Limpia el tablero para un nuevo juego
+                tablero.clear();
                 vidaTotalAzul = 0;
                 vidaTotalRojo = 0;
-                mayorVidaAzul = new Soldado(null, 0, 0, 0, null);
-                mayorVidaRojo = new Soldado(null, 0, 0, 0, null);
+                mayorVidaAzul = new Soldado(null, 0, null, null);
+                mayorVidaRojo = new Soldado(null, 0, null, null);
                 soldadosUniDimensionalAzul = new Soldado[10];
                 soldadosUniDimensionalRojo = new Soldado[10];
-            }
-            else if(rpta.equals("n"))
+            } else if (rpta.equals("n"))
                 seguir = false;
             else
                 System.out.println("Esa no es una opción válida");
         }
     }
-    public static void iniciarPrograma(ArrayList<ArrayList<Soldado>> tablero){
-        int cantidad = (int)(Math.random() * 10 + 1);
-        int cantidadEnemiga = (int)(Math.random() * 10 + 1);
-        for(int i = 0; i<10; i++){ //INICIALIZAR 10 FILAS
-            tablero.add(new ArrayList<Soldado>());
-            for(int j = 0; j<10;j++) //INICIALIZAR 10 COLUMNAS
-                tablero.get(i).add(null); // INICIALIZA CON VALOR NULL PARA AHORRAR MEMORIA
-        }
-        inicializarEjercito(tablero, cantidad, "\u001B[44mSoldado", "azul"); // INICIALIZAR DATOS DE LOS EJERCITOS
+
+    public static void iniciarPrograma(HashMap<String, Soldado> tablero) {
+        int cantidad = (int) (Math.random()*10+1);
+        int cantidadEnemiga = (int) (Math.random()*10+1);
+
+        inicializarEjercito(tablero, cantidad, "\u001B[44mSoldado", "azul");
         inicializarEjercito(tablero, cantidadEnemiga, "\u001B[41mSoldado", "rojo");
-        mostrarTabla(tablero); // MUESTRA TABLA
+
+        mostrarTabla(tablero);
         hallarSoldadoMayorVida(tablero);
+
         System.out.println("El soldado con mayor vida del ejército azul es: " + mayorVidaAzul);
         System.out.println("El soldado con mayor vida del ejército rojo es: " + mayorVidaRojo);
-        System.out.println("El promedio del ejercito azul es: " + vidaTotalAzul/cantidad);
-        System.out.println("El promedio del ejercito rojo es: " + vidaTotalRojo/cantidadEnemiga);
+        System.out.println("El promedio del ejército azul es: " + vidaTotalAzul / cantidad);
+        System.out.println("El promedio del ejército rojo es: " + vidaTotalRojo / cantidadEnemiga);
+
         System.out.println("DATOS DEL EJÉRCITO AZUL POR ORDEN DE INGRESO:");
-        imprimirInformacion(cantidad, soldadosUniDimensionalAzul); // IMPRIME LA INFORMACIÓN CON toString
+        imprimirInformacion(cantidad, soldadosUniDimensionalAzul);
         System.out.println("DATOS DEL EJÉRCITO ROJO POR ORDEN DE INGRESO:");
         imprimirInformacion(cantidadEnemiga, soldadosUniDimensionalRojo);
-        rankingDePoder(cantidad, soldadosUniDimensionalAzul); // ORDENA POR MÉTODO BURBUJA
-        ordenarSeleccion(cantidadEnemiga, soldadosUniDimensionalRojo); // ORDENA POR MÉTODO SELECCIÓN
+
+        rankingDePoder(cantidad, soldadosUniDimensionalAzul);
+        ordenarSeleccion(cantidadEnemiga, soldadosUniDimensionalRojo);
+
         System.out.println("DATOS DEL EJÉRCITO AZUL ORDENADO POR NIVEL DE VIDA:");
         imprimirInformacion(cantidad, soldadosUniDimensionalAzul);
         System.out.println("DATOS DEL EJÉRCITO ROJO ORDENADO POR NIVEL DE VIDA:");
         imprimirInformacion(cantidadEnemiga, soldadosUniDimensionalRojo);
-        mostrarGanador(); // MUESTRA EL GANADOR, CRITERIO: VIDA TOTAL DE LOS EJÉRCITOS
+
+        mostrarGanador();
     }
-    public static void inicializarEjercito(ArrayList<ArrayList<Soldado>> tablero, int cantidad, String color, String equipo) { // INICIALIZA SOLDADOS CON SU INFORMACIÓN
-        int contadorIndiceSoldadoAzul = 0; //CONTADORES DIFERNTES PARA EVITAR ERROR NullPointer
+
+    public static void inicializarEjercito(HashMap<String, Soldado> tablero, int cantidad, String color, String equipo) {
+        int contadorIndiceSoldadoAzul = 0;
         int contadorIndiceSoldadoRojo = 0;
+
         while (cantidad > 0) {
-            int fila = (int) (Math.random() * 10);
-            int columna = (int) (Math.random() * 10);
-            if (tablero.get(fila).get(columna) == null) { // SE VERIFICA QUE NO HAYA OTRO SOLDADO EN ESA POSICIÓN, SI LO HAY, BUSCA OTRA
-                tablero.get(fila).set(columna, new Soldado(color+fila+"X"+columna + "\u001B[0m", (int) (Math.random() * 5 + 1), fila, columna, equipo));  //COLORES PARA LA DISTINCIÓN
+            String key = (int) (Math.random()*10) + "X" + (int) (Math.random()*10);
+
+            if (!tablero.containsKey(key)) {
+                Soldado soldado = new Soldado(color + key + "\u001B[0m", (int) (Math.random()*5+1), key, equipo);
+                tablero.put(key, soldado);
                 cantidad--;
-                if(equipo.equals("azul")){
-                    vidaTotalAzul += tablero.get(fila).get(columna).getVida();
-                    soldadosUniDimensionalAzul[contadorIndiceSoldadoAzul] = tablero.get(fila).get(columna);
+
+                if (equipo.equals("azul")) {
+                    vidaTotalAzul += soldado.getVida();
+                    soldadosUniDimensionalAzul[contadorIndiceSoldadoAzul] = soldado;
                     contadorIndiceSoldadoAzul++;
-                }
-                else{
-                    vidaTotalRojo += tablero.get(fila).get(columna).getVida();
-                    soldadosUniDimensionalRojo[contadorIndiceSoldadoRojo] = tablero.get(fila).get(columna);
+                } else {
+                    vidaTotalRojo += soldado.getVida();
+                    soldadosUniDimensionalRojo[contadorIndiceSoldadoRojo] = soldado;
                     contadorIndiceSoldadoRojo++;
                 }
             }
         }
     }
-    public static void mostrarTabla(ArrayList<ArrayList<Soldado>> tablero) {  // GENERA LA TABLA PARA LOS SOLDADOS
-        for (int i = 0; i < tablero.size(); i++) {
-            for (int j = 0; j < tablero.get(i).size(); j++) {
-                if (tablero.get(i).get(j) == null) System.out.print("|__________"); // GENERA ESPACIOS EN BLANCO
-                else System.out.print("|" + tablero.get(i).get(j).getNombre());  // CARGA EL NOMBRE DEL SOLDADO SI EXISTE
+
+    public static void mostrarTabla(HashMap<String, Soldado> tablero) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                String key = i + "X" + j;
+                if (tablero.containsKey(key)) {
+                    System.out.print("|" + tablero.get(key).getNombre());
+                } else {
+                    System.out.print("|__________");
+                }
             }
-            System.out.println("|"); // ACOMODA EL TABLERO 10X10
+            System.out.println("|");
         }
     }
-    public static void hallarSoldadoMayorVida(ArrayList<ArrayList<Soldado>> tablero) { // MUESTRA AL SOLDADO CON MAYOR VIDA
-        for (int i = 0; i < tablero.size(); i++) {
-            for (int j = 0; j < tablero.get(i).size(); j++) {
-                if (tablero.get(i).get(j) != null && tablero.get(i).get(j).getEquipo().equals("azul") && mayorVidaAzul.getVida() < tablero.get(i).get(j).getVida()) // SOLO SE CUMPLE SI HAY UN SOLDADO, PERTENECE AL EQUIPO AZUL Y ES MAYOR
-                    mayorVidaAzul = tablero.get(i).get(j);
-                if (tablero.get(i).get(j) != null && tablero.get(i).get(j).getEquipo().equals("rojo") && mayorVidaRojo.getVida() < tablero.get(i).get(j).getVida()) // SOLO SE CUMPLE SI LA VIDA ES DIFERENTES DE 0, PERTENECE AL EQUIPO ROJO Y ES MAYOR
-                    mayorVidaRojo = tablero.get(i).get(j);
+
+    public static void hallarSoldadoMayorVida(HashMap<String, Soldado> tablero) {
+        for (Soldado soldado : tablero.values()) {
+            if (soldado.getEquipo().equals("azul") && soldado.getVida() > mayorVidaAzul.getVida()) {
+                mayorVidaAzul = soldado;
+            }
+            if (soldado.getEquipo().equals("rojo") && soldado.getVida() > mayorVidaRojo.getVida()) {
+                mayorVidaRojo = soldado;
             }
         }
     }
-    public static void rankingDePoder(int cantidad, Soldado[] soldadosUniDimensional) { //PRIMER ALGORITMO DE ORDENAMIENTO (BURBUJA)
+
+    public static void rankingDePoder(int cantidad, Soldado[] soldadosUniDimensional) {
         boolean intercambio = true;
         while (intercambio) {
-            intercambio = false;  // LO MANTIENE FALSO HASTA QUE SE HAYA UN INTERCAMBIO, SINO SE SALE DEL BUCLE
+            intercambio = false;
             for (int i = 0; i < cantidad - 1; i++)
                 if (soldadosUniDimensional[i].getVida() < soldadosUniDimensional[i + 1].getVida()) {
                     intercambio = true;
-                    Soldado temp = new Soldado(null, 0, 0, 0, null); //VARIABLE TEMPORAL PARA EL INTERCAMBIO
+                    Soldado temp = new Soldado(null, 0, null, null);
                     temp = soldadosUniDimensional[i + 1];
                     soldadosUniDimensional[i + 1] = soldadosUniDimensional[i];
                     soldadosUniDimensional[i] = temp;
                 }
         }
     }
-    public static void ordenarSeleccion(int cantidad, Soldado[] soldadosUniDimensional) { // 2DO ALGORITMO DE ORDENAMIENTO
-        for (int i = 0; i < cantidad - 1; i++) { //SE USA LA CANTIDAD PARA EVITAR QUE EL BUCLE SEÑALE A OBJETOS NULL
+
+    public static void ordenarSeleccion(int cantidad, Soldado[] soldadosUniDimensional) {
+        for (int i = 0; i < cantidad-1; i++) {
             int menor = i;
             for (int j = i + 1; j < cantidad; j++)
                 if (soldadosUniDimensional[j].getVida() > soldadosUniDimensional[menor].getVida())
-                    menor = j; // Almacena la posición del menor
-            Soldado temp = soldadosUniDimensional[menor];             // Intercambio de elementos
+                    menor = j;
+            Soldado temp = soldadosUniDimensional[menor];
             soldadosUniDimensional[menor] = soldadosUniDimensional[i];
             soldadosUniDimensional[i] = temp;
         }
     }
-    public static void imprimirInformacion(int cantidad, Soldado[] soldadosUniDimensional){
-        for(int i = 0; i<cantidad; i++){
+
+    public static void imprimirInformacion(int cantidad, Soldado[] soldadosUniDimensional) {
+        for (int i = 0; i < cantidad; i++) {
             System.out.println("SOLDADO " + i + ":");
-            System.out.println(soldadosUniDimensional[i].toString()); //ME APOYO DE UNA MATRIZ UNIDIMENSIONAL PARA NO
-        }                                                               // DESPERDICIAR MEMORIA
+            System.out.println(soldadosUniDimensional[i].toString());
+        }
     }
-    public static void mostrarGanador(){ // CRITERIO: CANTIDAD TOTAL DE VIDA
-        if(vidaTotalAzul>vidaTotalRojo)
+
+    public static void mostrarGanador() {
+        if (vidaTotalAzul > vidaTotalRojo)
             System.out.println("¡El ejercito azul gana por mayor nivel de vida! " + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");
-        else if(vidaTotalAzul<vidaTotalRojo)
+        else if (vidaTotalAzul < vidaTotalRojo)
             System.out.println("¡El ejercito rojo gana por mayor nivel de vida! " + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");
         else
-            System.out.println("¡Ha ocurrido un empate! "  + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");
+            System.out.println("¡Ha ocurrido un empate! " + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");
     }
 }

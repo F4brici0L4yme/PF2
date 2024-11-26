@@ -1,14 +1,12 @@
 public class Soldado {
     private String nombre;
     private int vida;
-    private int fila;
-    private int columna;
+    private String filaYcolumna;
     private String equipo;
-    public Soldado(String nombre, int vida, int fila, int columna, String equipo){ // CONSTRUCTOR PARA EVITAR MUCHOS MÉTODOS
+    public Soldado(String nombre, int vida, String filaYcolumna, String equipo){ // CONSTRUCTOR PARA EVITAR MUCHOS MÉTODOS
         this.nombre = nombre;
         this.vida = vida;
-        this.fila = fila;
-        this.columna = columna;
+        this.filaYcolumna = filaYcolumna;
         this.equipo = equipo;
     }
     public String getNombre() {
@@ -21,11 +19,9 @@ public class Soldado {
         return equipo;
     }
     public String toString() {
-        return "Nombre: " + nombre + " | Vida: " + vida + " | Fila: " + fila + " | Columna: " + columna;
+        return "Nombre: " + nombre + " | Vida: " + vida + " | Fila y Columna: " + filaYcolumna;
     }
     public void setNombre(String next) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setNombre'");
     }
 }
-
