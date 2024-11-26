@@ -1,3 +1,4 @@
+/*Propósito: Simular el tablero de ejércitos usando HashMap*/
 import java.util.*;
 
 public class VideoJuego8 {
@@ -18,11 +19,11 @@ public class VideoJuego8 {
             String rpta = scan.next();
             if (rpta.equals("s")) {
                 iniciarPrograma(tablero);
-                tablero.clear();
+                tablero.clear(); /*Nuevo comando, clear() para reiniciar los HashMaps que utilizo */
                 vidaTotalAzul = 0;
                 vidaTotalRojo = 0;
-                mayorVidaAzul = new Soldado(null, 0, null, null);
-                mayorVidaRojo = new Soldado(null, 0, null, null);
+                mayorVidaAzul = new Soldado(null, 0, null, null); /*Nueva estructura de constructor*/
+                mayorVidaRojo = new Soldado(null, 0, null, null); /*Por el uso de HashMap */
                 soldadosUniDimensionalAzul = new Soldado[10];
                 soldadosUniDimensionalRojo = new Soldado[10];
             } else if (rpta.equals("n"))
@@ -44,8 +45,8 @@ public class VideoJuego8 {
 
         System.out.println("El soldado con mayor vida del ejército azul es: " + mayorVidaAzul);
         System.out.println("El soldado con mayor vida del ejército rojo es: " + mayorVidaRojo);
-        System.out.println("El promedio del ejército azul es: " + vidaTotalAzul / cantidad);
-        System.out.println("El promedio del ejército rojo es: " + vidaTotalRojo / cantidadEnemiga);
+        System.out.println("El promedio del ejército azul es: " + vidaTotalAzul/cantidad);
+        System.out.println("El promedio del ejército rojo es: " + vidaTotalRojo/cantidadEnemiga);
 
         System.out.println("DATOS DEL EJÉRCITO AZUL POR ORDEN DE INGRESO:");
         imprimirInformacion(cantidad, soldadosUniDimensionalAzul);
@@ -68,11 +69,11 @@ public class VideoJuego8 {
         int contadorIndiceSoldadoRojo = 0;
 
         while (cantidad > 0) {
-            String key = (int) (Math.random()*10) + "X" + (int) (Math.random()*10);
+            String key = (int) (Math.random()*10) + "X" + (int) (Math.random()*10); /*Ahora uso keys para la posición y nombre */
 
             if (!tablero.containsKey(key)) {
                 Soldado soldado = new Soldado(color + key + "\u001B[0m", (int) (Math.random()*5+1), key, equipo);
-                tablero.put(key, soldado);
+                tablero.put(key, soldado); /*Cambio al método put() para insertar los Soldados */
                 cantidad--;
 
                 if (equipo.equals("azul")) {
@@ -92,24 +93,21 @@ public class VideoJuego8 {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 String key = i + "X" + j;
-                if (tablero.containsKey(key)) {
-                    System.out.print("|" + tablero.get(key).getNombre());
-                } else {
+                if (tablero.containsKey(key)) /*Verifica la existencia de la key en HashMap */
+                    System.out.print("|" + tablero.get(key).getNombre()); /*Retorna el nombre del Soldado */
+                else
                     System.out.print("|__________");
-                }
             }
             System.out.println("|");
         }
     }
 
     public static void hallarSoldadoMayorVida(HashMap<String, Soldado> tablero) {
-        for (Soldado soldado : tablero.values()) {
-            if (soldado.getEquipo().equals("azul") && soldado.getVida() > mayorVidaAzul.getVida()) {
+        for (Soldado soldado : tablero.values()) { /*Itera solo en los Soldados del HashMap */
+            if (soldado.getEquipo().equals("azul") && soldado.getVida() > mayorVidaAzul.getVida())
                 mayorVidaAzul = soldado;
-            }
-            if (soldado.getEquipo().equals("rojo") && soldado.getVida() > mayorVidaRojo.getVida()) {
+            if (soldado.getEquipo().equals("rojo") && soldado.getVida() > mayorVidaRojo.getVida())
                 mayorVidaRojo = soldado;
-            }
         }
     }
 
@@ -148,7 +146,7 @@ public class VideoJuego8 {
     }
 
     public static void mostrarGanador() {
-        if (vidaTotalAzul > vidaTotalRojo)
+        if (vidaTotalAzul > vidaTotalRojo) /*Gana quien tiene mayor vida en todo el ejército */
             System.out.println("¡El ejercito azul gana por mayor nivel de vida! " + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");
         else if (vidaTotalAzul < vidaTotalRojo)
             System.out.println("¡El ejercito rojo gana por mayor nivel de vida! " + "\nAzul " + vidaTotalAzul + ":" + vidaTotalRojo + " Rojo");

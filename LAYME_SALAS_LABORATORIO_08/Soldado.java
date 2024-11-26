@@ -21,7 +21,4 @@ public class Soldado {
     public String toString() {
         return "Nombre: " + nombre + " | Vida: " + vida + " | Fila y Columna: " + filaYcolumna;
     }
-    public void setNombre(String next) {
-        throw new UnsupportedOperationException("Unimplemented method 'setNombre'");
-    }
 }
